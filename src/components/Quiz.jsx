@@ -7,6 +7,8 @@ export default function Quiz() {
 	const [userAnswers, setUserAnswers] = useState([]);
 	const activeQuestionIndex = userAnswers.length;
 
+	const quizIsComplete = activeQuestionIndex === QUESTIONS.length;
+
 	function handleSelectAnswer(selectedAnswer) {
 		setUserAnswers((prevUserAnswers) => {
 			return [...prevUserAnswers, selectedAnswer];
@@ -14,7 +16,7 @@ export default function Quiz() {
 	}
 	// console.log(userAnswers);
 
-	if (activeQuestionIndex === QUESTIONS.length) {
+	if (quizIsComplete) {
 		// In above line we are checking that the Questions are completed, if yes then we will render this below "Quiz Completed" section.
 		return (
 			<div id="summary">
