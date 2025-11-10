@@ -110,3 +110,36 @@ header h1 {
 	color: white;
 	/* box-shadow: 0 0 4px 2px rgba(255, 200, 60, 0.8); */
 }
+
+#summary {
+	max-width: 40rem;
+	margin: 2rem auto;
+	padding: 2rem;
+	background: linear-gradient(180deg, #a17eda 0%, #895fc4 100%);
+	color: #191321;
+	border-radius: 8px;
+	box-shadow: 1px 1px 8px 1px rgba(0, 0, 0, 0.6);
+	animation: slide-in-from-bottom 0.7s ease-out;
+}
+
+#summary img {
+	display: block;
+	width: 8rem;
+	height: 8rem;
+	object-fit: contain;
+	margin: 0 auto 1rem auto;
+	padding: 1rem;
+	filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.6));
+	border: 2px solid #3a2353;
+	border-radius: 50%;
+	background: #c18cfa;
+}
+
+#summary h2 {
+	font-family: "Roboto", sans-serif;
+	font-size: 3rem;
+	text-align: center;
+	margin: 0;
+	text-transform: uppercase;
+	color: #3a2353;
+}
