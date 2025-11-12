@@ -5,24 +5,24 @@ export default function QuestionTimer({ timeout, onTimeout }) {
 
 	useEffect(() => {
 		console.log("Timer started");
-		setTimeout(() => {
+		const timer = setTimeout(() => {
 			onTimeout();
 		}, timeout);
 
-		// return () => {
-		// 	clearTimeout(timerId);
-		// };
+		return () => {
+			clearTimeout(timer);
+		};
 	}, [timeout, onTimeout]);
 
 	useEffect(() => {
 		console.log("Interval Started");
-		setInterval(() => {
+		const interval = setInterval(() => {
 			setRemainingTime((prevRemainingTime) => prevRemainingTime - 100);
 		}, 100);
 
-		// return () => {
-		// 	clearInterval(intervalId);
-		// };
+		return () => {
+			clearInterval(interval);
+		};
 	}, []);
 
 	return <progress id="question-time" max={timeout} value={remainingTime} />;
