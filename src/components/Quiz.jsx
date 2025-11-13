@@ -1,10 +1,10 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import QUESTIONS from "../questions.js";
 import quizCompleteImg from "../assets/quiz-complete.png";
-
 import QuestionTimer from "./QuestionTimer.jsx";
 
 export default function Quiz() {
+	const shuffledAnswers = useRef();
 	// const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
 	const [answerState, setAnswerState] = useState("");
 	const [userAnswers, setUserAnswers] = useState([]);
@@ -42,27 +42,30 @@ export default function Quiz() {
 		// In above line we are checking that the Questions are completed, if yes then we will render this below "Quiz Completed" section.
 		return (
 			<div id="summary">
-				<img src={quizCompleteImg} alt="" />
+				<img src={quizCompleteImg} alt="Trophy Icon" />
 				<h2>Quiz Completed</h2>
 			</div>
 		);
 	}
 
-	// This below line is going to make a copy of the available answers options for Each question (according to the activeQuestionIndex)
-	const shuffledAnswers = [...QUESTIONS[activeQuestionIndex].answers];
-	// When we have read the last Question, then in the next iteration, the activeQuestionIndex will be equal to the length of the "userAnswers" array, and that index QUESTION does not exist (as length is 1 greater than the Index), so in last it will give us an error if we put this above line before the if(activeQuestionIndex === QUESTIONS.length) condition.
-	// Because that index Question does not exist.
-	shuffledAnswers.sort(() => Math.random() - 0.5);
-	// sort method sorts the array in place, so we made a copy of the available answers options for Each question (according to the activeQuestionIndex) and then sorted it randomly.
+	if (!shuffledAnswers.current) {
+		// This below line is going to make a copy of the available answers options for Each question (according to the activeQuestionIndex)
+		shuffledAnswers.current = [...QUESTIONS[activeQuestionIndex].answers];
+
+		// When we have read the last Question, then in the next iteration, the activeQuestionIndex will be equal to the length of the "userAnswers" array, and that index QUESTION does not exist (as length is 1 greater than the Index), so in last it will give us an error if we put this above line before the if(activeQuestionIndex === QUESTIONS.length) condition.
+		// Because that index Question does not exist.
+		shuffledAnswers.current.sort(() => Math.random() - 0.5);
+		// sort method sorts the array in place, so we made a copy of the available answers options for Each question (according to the activeQuestionIndex) and then sorted it randomly.
+	}
 
 	return (
 		<div id="quiz">
-			<div id="questions">
+			<div id="question">
 				<QuestionTimer timeout={10000} onTimeout={handleSkipAnswer} key={activeQuestionIndex} />
 				<h2>{QUESTIONS[activeQuestionIndex].text}</h2>
 				<ul id="answers">
 					{/* {QUESTIONS[activeQuestionIndex].answers.map((answer) => ( */}
-					{shuffledAnswers.map((answer) => {
+					{shuffledAnswers.current.map((answer) => {
 						const isSelected = answer === userAnswers[userAnswers.length - 1];
 						let cssClass = "";
 
