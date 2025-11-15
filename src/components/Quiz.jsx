@@ -5,35 +5,33 @@ import Question from "./Question.jsx";
 
 export default function Quiz() {
 	// const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
-	const [answerState, setAnswerState] = useState("");
+	// const [answerState, setAnswerState] = useState("");
 	const [userAnswers, setUserAnswers] = useState([]);
 
-	const activeQuestionIndex = answerState === "" ? userAnswers.length : userAnswers.length - 1;
+	// const activeQuestionIndex = answerState === "" ? userAnswers.length : userAnswers.length - 1;
+	const activeQuestionIndex = userAnswers.length;
 
 	const quizIsComplete = activeQuestionIndex === QUESTIONS.length;
 
-	const handleSelectAnswer = useCallback(
-		function handleSelectAnswer(selectedAnswer) {
-			setAnswerState("answered");
-			setUserAnswers((prevUserAnswers) => {
-				return [...prevUserAnswers, selectedAnswer];
-			});
-			// console.log(userAnswers);
+	const handleSelectAnswer = useCallback(function handleSelectAnswer(selectedAnswer) {
+		// setAnswerState("answered");
+		setUserAnswers((prevUserAnswers) => {
+			return [...prevUserAnswers, selectedAnswer];
+		});
+		// console.log(userAnswers);
 
-			setTimeout(() => {
-				if (selectedAnswer === QUESTIONS[activeQuestionIndex].answers[0]) {
-					setAnswerState("correct");
-				} else {
-					setAnswerState("wrong");
-				}
+		// setTimeout(() => {
+		// 	if (selectedAnswer === QUESTIONS[activeQuestionIndex].answers[0]) {
+		// 		setAnswerState("correct");
+		// 	} else {
+		// 		setAnswerState("wrong");
+		// 	}
 
-				setTimeout(() => {
-					setAnswerState("");
-				}, 2000);
-			}, 1000);
-		},
-		[activeQuestionIndex]
-	);
+		// 	setTimeout(() => {
+		// 		setAnswerState("");
+		// 	}, 2000);
+		// }, 1000);
+	}, []);
 
 	const handleSkipAnswer = useCallback(() => handleSelectAnswer(null), [handleSelectAnswer]);
 
@@ -51,10 +49,9 @@ export default function Quiz() {
 		<div id="quiz">
 			<Question
 				key={activeQuestionIndex}
-				questionText={QUESTIONS[activeQuestionIndex].text}
-				answers={QUESTIONS[activeQuestionIndex].answers}
-				selectedAnswer={userAnswers[userAnswers.length - 1]}
-				answerState={answerState}
+				index={activeQuestionIndex}
+				// selectedAnswer={userAnswers[userAnswers.length - 1]}
+				// answerState={answerState}
 				onSelectAnswer={handleSelectAnswer}
 				onSkipAnswer={handleSkipAnswer}
 			/>
