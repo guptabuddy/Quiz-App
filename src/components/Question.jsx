@@ -6,6 +6,14 @@ import QUESTIONS from "../questions.js";
 export default function Question({ onSelectAnswer, onSkipAnswer, index }) {
 	const [answer, setAnswer] = useState({ selectedAnswer: "", isCorrect: null });
 
+	let timer = 10000;
+	if (answer.selectedAnswer) {
+		timer = 1000;
+	}
+	if (answer.isCorrect !== null) {
+		timer = 2000;
+	}
+
 	function handleSelectAnswer(answer) {
 		setAnswer({
 			selectedAnswer: answer,
@@ -35,7 +43,7 @@ export default function Question({ onSelectAnswer, onSkipAnswer, index }) {
 
 	return (
 		<div id="question">
-			<QuestionTimer timeout={10000} onTimeout={onSkipAnswer} />
+			<QuestionTimer key={timer} timeout={timer} onTimeout={answer.selectedAnswer === "" ? onSkipAnswer : null} mode={answerState} />
 			<h2>{QUESTIONS[index].text}</h2>
 			<Answers
 				selectedAnswer={answer.selectedAnswer}
@@ -47,4 +55,4 @@ export default function Question({ onSelectAnswer, onSkipAnswer, index }) {
 	);
 }
 
-// Get rid of passing multiple props from Quiz to Question component, and move the Logic to the Question component. Also disable answers if one answer is selected.
+// Get rid of passing multiple props from Quiz to Question component, and move the Logic to the Question component. Also disable answers through Answers component if one answer is selected.
